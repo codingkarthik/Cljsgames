@@ -9,19 +9,13 @@
 
 (defn sum1
   []
-  (let [aa (if (= "" (.-value (.getElementById js/document (str "output" 1)))) 0
-               1)
-        b (if (= "" (.-value (.getElementById js/document (str "output" 2)))) 0
-              1 )
-        c (if (= "" (.-value (.getElementById js/document (str "output" 3)))) 0 1 )
-        d (if (= "" (.-value (.getElementById js/document (str "output" 4)))) 0 1 )
-        e (if (= "" (.-value (.getElementById js/document (str "output" 5)))) 0 1 )
-        f (if (= "" (.-value (.getElementById js/document (str "output" 6)))) 0 1 )
-        g (if (= "" (.-value (.getElementById js/document (str "output" 7)))) 0 1 )
-        h (if (= "" (.-value (.getElementById js/document (str "output" 8)))) 0 1 )
-        i (if (= "" (.-value (.getElementById js/document (str "output" 9)))) 0 1 )]
+  (let [x (map #(if (= "" %)
+                  0
+                  1) (convert-to-list))
+        y (reduce + x)]
     #_(js/alert (+ aa b c d e f g h i))
-    (if (= 9 (+ aa b c d e f g h i))
+
+    (if (= 9 y)
       (do  (js/alert "Game over!")
            false)
       true)))
@@ -31,24 +25,9 @@
 
 (defn reset1
   []
-  (set! (.-value (.getElementById js/document (str "output" 1)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 2)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 3)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 4)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 5)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 6)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 7)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 8)))
-        "")
-  (set! (.-value (.getElementById js/document (str "output" 9)))
-        ""))
+  (doall (map #(set! (.-value (.getElementById js/document (str "output" %)))
+                     "")
+              (range 1 10))))
 
 
 
@@ -59,17 +38,7 @@
 
 (defn convert-to-list
   []
-  (let [aa (.-value (.getElementById js/document (str "output" 1)))
-        b (.-value (.getElementById js/document (str "output" 2)))
-        c (.-value (.getElementById js/document (str "output" 3)))
-        d (.-value (.getElementById js/document (str "output" 4)))
-        e (.-value (.getElementById js/document (str "output" 5)))
-        f (.-value (.getElementById js/document (str "output" 6)))
-        g (.-value (.getElementById js/document (str "output" 7)))
-        h (.-value (.getElementById js/document (str "output" 8)))
-        i (.-value (.getElementById js/document (str "output" 9)))
-        ]
-    [aa b c d e f g h i]))
+  (mapv #(.-value (.getElementById js/document (str "output" %))) (range 1 10)))
 
 
 (defn check
